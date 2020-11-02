@@ -1,21 +1,21 @@
 
 let crud = new function(){
- this.element = document.getElementById("task");
- this.task = [];
+ this.element = document.getElementById("show");
+ this.array = [];
 /* FetchFunction */
  this.FetchAll = function(){
    let data = " ";
-   if(this.task.length > 0){
-       for(let i = 0; i < this.task.length; i++){
+   if(this.array.length > 0){
+       for(let i = 0; i < this.array.length; i++){
         data += '<tr>';
-        data += '<td>'+(i+1)+". " + this.task[i] + '</td>';
+        data += '<td>'+(i+1)+". " + this.array[i] + '</td>';
         data += '<td><button onclick="crud.Edit(' + i + ')"  class="btn btn-secondary">Edit</button></td>';
         data += '<td><button onclick="crud.Delete(' + i + ')"  class="btn btn-danger">Delete</button></td>';
         data += '</tr>';
        }
 
    }
-   this.Count(this.task.length);
+   this.Count(this.array.length);
    return this.element.innerHTML = data;
 
  };
@@ -24,7 +24,7 @@ let crud = new function(){
    element = document.getElementById("addInput");
    let tasks = element.value;
    if(tasks){
-       this.task.push(tasks.trim());
+       this.array.push(tasks.trim());
         element.value = " ";
         this.FetchAll();
    }
@@ -34,14 +34,13 @@ let crud = new function(){
 /* edit part */
  this.Edit = function(item){
     var element = document.getElementById('edit');
-    element.value = this.task[item];
-    document.getElementById('editResult').style.display = "block";
+    element.value = this.array[item];
+    
     self = this;
     document.getElementById('save-edit').onsubmit = function() {
       var tasks = element.value;
-
       if (tasks) {
-        self.task.splice(item, 1, tasks.trim());
+        self.array.splice(item, 1, tasks.trim());
         self.FetchAll();
         closeInput();
      }
@@ -50,7 +49,7 @@ let crud = new function(){
 
  /* delete part */
  this.Delete = function(item){
-    this.task.splice(item, 1);
+    this.array.splice(item, 1);
     this.FetchAll();
  };
 
@@ -60,7 +59,7 @@ let crud = new function(){
     var name = 'Save items.';
 
     if (data) {
-        if(data ==1){
+        if(data >= 1){
             name = 'Save items'
         }
       element.innerHTML = name + ' ' + data ;
